@@ -1,3 +1,13 @@
+//fragment is for colors
+
+// varying is for connection between vertex and fragment shader
+varying float vNoise;
+
 void main() {
-    gl_FragColor = vec4(1., 0., 0.0, 1.);
+    vec3 color1 = vec3(1., 0., 0.);
+    vec3 color2 = vec3(1., 1., 1.);
+
+    vec3 finalColor = mix(color1, color2, 0.5 * (vNoise + 1.));
+
+    gl_FragColor = vec4(finalColor, 1.);
 }

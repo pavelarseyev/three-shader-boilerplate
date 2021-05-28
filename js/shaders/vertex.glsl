@@ -1,3 +1,6 @@
+// responsibility of vertexes
+
+
 //	Classic Perlin 3D Noise 
 //	by Stefan Gustavson
 //
@@ -74,12 +77,21 @@ float cnoise(vec3 P){
 }
 
 
+uniform float time;
+
+// varying is for connection between vertex and fragment shader
+varying float vNoise;
+
 
 void main() {
     vec3 newposition = position;
     float PI = 3.1415925;
-    newposition.z += 0.1*sin((newposition.x + 0.25)*2.*PI);
-    // newposition.z += cnoise(vec3(position.x, position.y, 0.));
+
+    float noise = cnoise(vec3(position.x*4., position.y*4. + time/5., 0.));
+    // newposition.z += 0.2*sin((newposition.x + 0.25 + time/5.)*2.*PI);
+    newposition.z += 0.1 * noise;
+
+    vNoise = noise;
 
     gl_Position = projectionMatrix * modelViewMatrix * vec4( newposition, 1.);
 }
