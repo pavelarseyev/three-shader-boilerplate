@@ -48,7 +48,7 @@ export default class Sketch {
     }
 
     addObjects() {
-        this.geometry = new THREE.BoxGeometry( 0.5, 0.5, 0.5 );
+        this.geometry = new THREE.PlaneGeometry(0.5, 0.5, 30, 30);
 
         //common material (for example)
         // this.material = new THREE.MeshNormalMaterial();
@@ -56,7 +56,9 @@ export default class Sketch {
         //shader material
         this.material = new THREE.ShaderMaterial({
             fragmentShader: fragment,
-            vertexShader: vertex
+            vertexShader: vertex,
+            side: THREE.DoubleSide,
+            wireframe: true,
         });
     
         this.mesh = new THREE.Mesh( this.geometry, this.material );
@@ -66,8 +68,8 @@ export default class Sketch {
     render() {
         this.time += 0.05;
 
-        this.mesh.rotation.x = this.time / 2000;
-        this.mesh.rotation.y = this.time / 1000;
+        // this.mesh.rotation.x = this.time / 2000;
+        // this.mesh.rotation.y = this.time / 1000;
 
         this.renderer.render( this.scene, this.camera );
         window.requestAnimationFrame(this.render.bind(this));
